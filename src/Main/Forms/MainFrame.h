@@ -140,6 +140,7 @@ namespace VeraCrypt
 		void OnSelectDeviceButtonClick (wxCommandEvent& event);
 		void OnSelectFileAndMountMenuItemSelected (wxCommandEvent& event);
 		void OnSelectFileButtonClick (wxCommandEvent& event);
+		void OnSelectStegoDirButtonClick (wxCommandEvent& event);
 		void OnTimer ();
 		void OnVersionHistoryMenuItemSelected (wxCommandEvent& event) { Gui->OpenHomepageLink (this, L"history"); }
 		void OnVolumePropertiesButtonClick (wxCommandEvent& event);

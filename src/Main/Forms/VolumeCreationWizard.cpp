@@ -23,6 +23,7 @@
 #include "Main/Resources.h"
 #include "VolumeCreationWizard.h"
 #include "EncryptionOptionsWizardPage.h"
+#include "StegoEncoderWizardPage.h"
 #include "InfoWizardPage.h"
 #include "ProgressWizardPage.h"
 #include "SingleChoiceWizardPage.h"
@@ -99,6 +100,7 @@ namespace VeraCrypt
 
 				page->AddChoice (VolumeHostType::File, LangString["IDC_FILE_CONTAINER"], LangString["IDT_FILE_CONTAINER"], L"introcontainer", LangString["IDC_MORE_INFO_ON_CONTAINERS"]);
 				page->AddChoice (VolumeHostType::Device, _("Create a volume within a partition/&drive"), _("Formats and encrypts a non-system partition, entire external or secondary drive, entire USB stick, etc."));
+				page->AddChoice (VolumeHostType::StegoDir, _("Create volume from Stego Directory"), _("Create ..."));
 
 				page->SetSelection (SelectedVolumeHostType);
 				return page;
@@ -121,12 +123,27 @@ namespace VeraCrypt
 				VolumeLocationWizardPage *page = new VolumeLocationWizardPage (GetPageParent(), SelectedVolumeHostType);
 				page->SetPageTitle (LangString["VOLUME_LOCATION"]);
 
+				if(SelectedVolumeHostType == VolumeHostType::StegoDir){
+					page->SetPageText (_("Select Stego Directory"));
+					
+				} else {
 				if (SelectedVolumeType == VolumeType::Hidden)
 					page->SetPageText (LangString[SelectedVolumeHostType == VolumeHostType::File ? "FILE_HELP_HIDDEN_HOST_VOL" : "DEVICE_HELP_HIDDEN_HOST_VOL"]);
 				else
 					page->SetPageText (LangString[SelectedVolumeHostType == VolumeHostType::File ? "FILE_HELP" : "DEVICE_HELP_NO_INPLACE"]);
+				}
 
 				page->SetVolumePath (SelectedVolumePath);
+				return page;
+			}
+			
+		case Step::StegoEncoderParams:
+			{
+				StegoEncoderWizardPage *page = new StegoEncoderWizardPage (GetPageParent());
+				page->SetPageTitle(_("Stego Encoder Wizard Page"));
+				
+				page->SetFilePath(StegoConfigPath);
+				
 				return page;
 			}
 
@@ -686,7 +703,39 @@ namespace VeraCrypt
 					else
 						SectorSize = TC_SECTOR_SIZE_FILE_HOSTED_VOLUME;
 				}
-
+				if(SelectedVolumeHostType == VolumeHostType::StegoDir){
+					stego_storage = std::unique_ptr<stego_disk::StegoStorage>(new stego_disk::StegoStorage());
+					return Step::StegoEncoderParams;
+				}
+				return Step::EncryptionOptions;
+			}
+			
+		case Step::StegoEncoderParams:
+			{
+				StegoEncoderWizardPage *page = dynamic_cast <StegoEncoderWizardPage *> (GetCurrentPage());
+				StegoConfigPath = page->GetStegoConfigFilePath();
+				
+				if(forward){
+					try{
+						
+						if(!StegoConfigPath.IsEmpty()){
+							stego_storage->Configure(StegoConfigPath);
+						} else {
+							stego_storage->Configure();
+						}
+						
+					} catch(...){
+						
+						if(!StegoConfigPath.IsEmpty()){
+							Gui->ShowError(_("ERROR: Invalid configuration file provided!"));
+						} else {
+							Gui->ShowError(_("ERROR: Problem with default configuration of StegoStorage!"));
+						}
+						return Step::StegoEncoderParams;
+						
+					}
+				}
+				
 				return Step::EncryptionOptions;
 			}
 
@@ -909,6 +958,11 @@ namespace VeraCrypt
 
 				if (forward)
 				{
+					if(SelectedVolumeHostType == VolumeHostType::StegoDir){
+						
+						//stego_storage->Load(SelectedVolumePath, Password);
+						
+					}
 					if (SelectedVolumeType != VolumeType::Hidden || OuterVolume)
 					{
 						if (OuterVolume && VolumeSize > TC_MAX_FAT_SECTOR_COUNT * SectorSize)

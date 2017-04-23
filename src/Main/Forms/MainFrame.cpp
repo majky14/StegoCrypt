@@ -1344,6 +1344,15 @@ namespace VeraCrypt
 		if (!path.IsEmpty())
 			SetVolumePath (path);
 	}
+	
+	void MainFrame::OnSelectStegoDirButtonClick (wxCommandEvent& event)
+	{
+		DirectoryPath path = Gui->SelectDirectory (this);
+
+		if (!path.IsEmpty())
+			SetVolumePath (path);
+	}
+
 
 	void MainFrame::OnTimer ()
 	{

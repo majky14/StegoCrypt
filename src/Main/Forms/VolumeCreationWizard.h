@@ -15,6 +15,7 @@
 
 #include "WizardFrame.h"
 #include "Core/VolumeCreator.h"
+#include "stego_storage.h"
 
 namespace VeraCrypt
 {
@@ -32,6 +33,7 @@ namespace VeraCrypt
 				VolumeHostType,
 				VolumeType,
 				VolumeLocation,
+				StegoEncoderParams,
 				EncryptionOptions,
 				VolumeSize,
 				VolumePassword,
@@ -76,6 +78,8 @@ namespace VeraCrypt
 		VolumeCreationOptions::FilesystemType::Enum SelectedFilesystemType;
 		VolumePath SelectedVolumePath;
 		VolumeHostType::Enum SelectedVolumeHostType;
+		std::unique_ptr<stego_disk::StegoStorage> stego_storage;
+		FilePath StegoConfigPath;
 		VolumeType::Enum SelectedVolumeType;
 		shared_ptr <VolumePassword> Password;
 		int Pim;

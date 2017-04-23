@@ -32,6 +32,7 @@ OBJS += Forms/BenchmarkDialog.o
 OBJS += Forms/ChangePasswordDialog.o
 OBJS += Forms/DeviceSelectionDialog.o
 OBJS += Forms/EncryptionOptionsWizardPage.o
+OBJS += Forms/StegoEncoderWizardPage.o
 OBJS += Forms/EncryptionTestDialog.o
 OBJS += Forms/FavoriteVolumesDialog.o
 OBJS += Forms/Forms.o

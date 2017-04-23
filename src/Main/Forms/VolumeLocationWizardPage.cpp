@@ -24,10 +24,16 @@ namespace VeraCrypt
 		switch (hostType)
 		{
 		case VolumeHostType::Device:
+			SelectStegoDirButton->Show (false);
 			SelectFileButton->Show (false);
 			break;
 
 		case VolumeHostType::File:
+			SelectStegoDirButton->Show (false);
+			SelectDeviceButton->Show (false);
+			break;
+		case VolumeHostType::StegoDir:
+			SelectFileButton->Show (false);
 			SelectDeviceButton->Show (false);
 			break;
 
@@ -89,6 +95,14 @@ namespace VeraCrypt
 	void VolumeLocationWizardPage::OnSelectDeviceButtonClick (wxCommandEvent& event)
 	{
 		DevicePath path = Gui->SelectDevice (this);
+
+		if (!path.IsEmpty())
+			SetVolumePath (path);
+	}
+	
+	void VolumeLocationWizardPage::OnSelectStegoDirButtonClick (wxCommandEvent& event)
+	{
+		DirectoryPath path = Gui->SelectDirectory (this);
 
 		if (!path.IsEmpty())
 			SetVolumePath (path);

@@ -136,6 +136,7 @@ namespace VeraCrypt
 		SharedVal <uint64> *UseCount;
 	};
 
+#if __cplusplus < 199711L
 #ifdef shared_ptr
 #undef shared_ptr
 #endif
@@ -156,6 +157,7 @@ namespace VeraCrypt
 	}
 
 #define make_shared VeraCrypt::make_shared
+#endif // __cplusplus < 199711L
 
 }
 

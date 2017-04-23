@@ -79,7 +79,8 @@ namespace VeraCrypt
 		{
 			Unknown,
 			File,
-			Device
+			Device,
+			StegoDir
 		};
 	};
 

@@ -35,6 +35,7 @@ namespace VeraCrypt
 		void OnNoHistoryCheckBoxClick (wxCommandEvent& event);
 		void OnSelectDeviceButtonClick (wxCommandEvent& event);
 		void OnSelectFileButtonClick (wxCommandEvent& event);
+		void OnSelectStegoDirButtonClick (wxCommandEvent& event);
 		void OnPreferencesUpdated (EventArgs &args);
 
 		bool SelectExisting;
