@@ -42,6 +42,7 @@ class WizardPage;
 #include <wx/gauge.h>
 #include <wx/spinctrl.h>
 #include <wx/notebook.h>
+#include <wx/radiobut.h>
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -1081,18 +1082,21 @@ namespace VeraCrypt
 		private:
 		
 		protected:
+			wxRadioButton* StegoRadioButton_Manual;
 			wxChoice* StegoEncoderAlgorithmChoice;
 			wxStaticText* StegoEncoderAlgorithmStaticText;
 			wxHyperlinkCtrl* StegoEncoderAlgorithmHyperlink;
+			wxRadioButton* StegoRadioButton_File;
 			wxComboBox* FilePathComboBox;
 			wxButton* SelectFileButton;
 			wxStaticText* StegoConfigStatusStaticText;
 			wxStaticText* StegoParamsFromFileStaticText;
-			wxStaticText* OtherOptionsStaticText;
 			
 			// Virtual event handlers, overide them in your derived class
+			virtual void OnStegoRadioClicked_Manual( wxCommandEvent& event ) { event.Skip(); }
 			virtual void OnStegoEncoderAlgorithmSelected( wxCommandEvent& event ) { event.Skip(); }
 			virtual void OnStegoEncoderAlgorithmHyperlinkClick( wxHyperlinkEvent& event ) { event.Skip(); }
+			virtual void OnStegoRadioClicked_File( wxCommandEvent& event ) { event.Skip(); }
 			virtual void OnFilePathTextChanged( wxCommandEvent& event ) { event.Skip(); }
 			virtual void OnSelectFileButtonClick( wxCommandEvent& event ) { event.Skip(); }
 			

@@ -721,7 +721,7 @@ namespace VeraCrypt
 						if(!StegoConfigPath.IsEmpty()){
 							stego_storage->Configure(StegoConfigPath);
 						} else {
-							stego_storage->Configure();
+							page->ConfigureStegoStorage(stego_storage);
 						}
 						
 					} catch(...){

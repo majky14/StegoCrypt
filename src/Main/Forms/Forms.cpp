@@ -3519,25 +3519,28 @@ StegoEncoderWizardPageBase::StegoEncoderWizardPageBase( wxWindow* parent, wxWind
 	wxStaticBoxSizer* sbSizer48;
 	sbSizer48 = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Encoder Algorithm") ), wxVERTICAL );
 	
+	StegoRadioButton_Manual = new wxRadioButton( this, wxID_ANY, _("Manual configuration"), wxDefaultPosition, wxDefaultSize, 0 );
+	sbSizer48->Add( StegoRadioButton_Manual, 0, wxALL, 5 );
+	
 	wxBoxSizer* bSizer171;
 	bSizer171 = new wxBoxSizer( wxVERTICAL );
 	
 	wxArrayString StegoEncoderAlgorithmChoiceChoices;
 	StegoEncoderAlgorithmChoice = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, StegoEncoderAlgorithmChoiceChoices, 0 );
 	StegoEncoderAlgorithmChoice->SetSelection( 0 );
-	bSizer171->Add( StegoEncoderAlgorithmChoice, 1, wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5 );
+	bSizer171->Add( StegoEncoderAlgorithmChoice, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5 );
 	
 	
 	sbSizer48->Add( bSizer171, 0, wxEXPAND, 5 );
 	
 	StegoEncoderAlgorithmStaticText = new wxStaticText( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
 	StegoEncoderAlgorithmStaticText->Wrap( -1 );
-	sbSizer48->Add( StegoEncoderAlgorithmStaticText, 1, wxALL|wxEXPAND, 5 );
+	sbSizer48->Add( StegoEncoderAlgorithmStaticText, 0, wxALL|wxEXPAND, 5 );
 	
 	wxBoxSizer* bSizer172;
 	bSizer172 = new wxBoxSizer( wxVERTICAL );
 	
-	StegoEncoderAlgorithmHyperlink = new wxHyperlinkCtrl( this, wxID_ANY, _("More information"), wxEmptyString, wxDefaultPosition, wxDefaultSize, wxHL_DEFAULT_STYLE );
+	StegoEncoderAlgorithmHyperlink = new wxHyperlinkCtrl( this, wxID_ANY, _("More information"), wxEmptyString, wxDefaultPosition, wxDefaultSize, wxHL_ALIGN_LEFT );
 	
 	StegoEncoderAlgorithmHyperlink->SetHoverColour( wxSystemSettings::GetColour( wxSYS_COLOUR_WINDOWTEXT ) );
 	StegoEncoderAlgorithmHyperlink->SetNormalColour( wxSystemSettings::GetColour( wxSYS_COLOUR_WINDOWTEXT ) );
@@ -3545,10 +3548,7 @@ StegoEncoderWizardPageBase::StegoEncoderWizardPageBase( wxWindow* parent, wxWind
 	bSizer172->Add( StegoEncoderAlgorithmHyperlink, 0, wxALL, 5 );
 	
 	
-	bSizer172->Add( 0, 0, 1, wxEXPAND, 5 );
-	
-	
-	sbSizer48->Add( bSizer172, 1, wxEXPAND, 5 );
+	sbSizer48->Add( bSizer172, 0, wxEXPAND, 5 );
 	
 	
 	bSizer170->Add( sbSizer48, 1, wxALL|wxEXPAND, 5 );
@@ -3556,30 +3556,28 @@ StegoEncoderWizardPageBase::StegoEncoderWizardPageBase( wxWindow* parent, wxWind
 	wxStaticBoxSizer* sbSizer50;
 	sbSizer50 = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Load StegoParams from file") ), wxVERTICAL );
 	
-	wxGridBagSizer* gbSizer4;
-	gbSizer4 = new wxGridBagSizer( 0, 0 );
-	gbSizer4->SetFlexibleDirection( wxBOTH );
-	gbSizer4->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	StegoRadioButton_File = new wxRadioButton( this, wxID_ANY, _("File configuration"), wxDefaultPosition, wxDefaultSize, 0 );
+	sbSizer50->Add( StegoRadioButton_File, 0, wxALL, 5 );
 	
 	wxBoxSizer* bSizer173;
 	bSizer173 = new wxBoxSizer( wxVERTICAL );
 	
+	wxBoxSizer* bSizer182;
+	bSizer182 = new wxBoxSizer( wxHORIZONTAL );
+	
 	FilePathComboBox = new wxComboBox( this, wxID_ANY, wxEmptyString, wxPoint( 0,0 ), wxDefaultSize, 0, NULL, wxCB_DROPDOWN ); 
-	bSizer173->Add( FilePathComboBox, 1, wxALIGN_CENTER|wxALL|wxEXPAND, 5 );
-	
-	
-	gbSizer4->Add( bSizer173, wxGBPosition( 0, 0 ), wxGBSpan( 1, 2 ), wxEXPAND, 5 );
-	
-	wxBoxSizer* bSizer175;
-	bSizer175 = new wxBoxSizer( wxVERTICAL );
+	bSizer182->Add( FilePathComboBox, 1, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	SelectFileButton = new wxButton( this, wxID_ANY, _("Select &File..."), wxPoint( 0,1 ), wxDefaultSize, 0 );
 	SelectFileButton->SetFont( wxFont( wxNORMAL_FONT->GetPointSize(), 70, 90, 90, false, wxEmptyString ) );
 	
-	bSizer175->Add( SelectFileButton, 0, wxALL, 5 );
+	bSizer182->Add( SelectFileButton, 0, wxALIGN_CENTER_VERTICAL, 5 );
 	
 	
-	gbSizer4->Add( bSizer175, wxGBPosition( 0, 2 ), wxGBSpan( 1, 1 ), wxEXPAND, 5 );
+	bSizer173->Add( bSizer182, 1, wxEXPAND, 5 );
+	
+	
+	sbSizer50->Add( bSizer173, 0, wxEXPAND, 5 );
 	
 	wxBoxSizer* bSizer1771;
 	bSizer1771 = new wxBoxSizer( wxVERTICAL );
@@ -3591,33 +3589,20 @@ StegoEncoderWizardPageBase::StegoEncoderWizardPageBase( wxWindow* parent, wxWind
 	bSizer1771->Add( StegoConfigStatusStaticText, 0, wxALL, 5 );
 	
 	
-	gbSizer4->Add( bSizer1771, wxGBPosition( 1, 0 ), wxGBSpan( 1, 1 ), wxEXPAND, 5 );
+	sbSizer50->Add( bSizer1771, 1, wxEXPAND, 5 );
 	
 	wxBoxSizer* bSizer178;
 	bSizer178 = new wxBoxSizer( wxVERTICAL );
 	
-	StegoParamsFromFileStaticText = new wxStaticText( this, wxID_ANY, _("Specify a file path containing StegoParams configuration file."), wxDefaultPosition, wxDefaultSize, 0 );
+	StegoParamsFromFileStaticText = new wxStaticText( this, wxID_ANY, _("Specify a file path containing StegoParams configuration file in JSON format."), wxDefaultPosition, wxDefaultSize, 0 );
 	StegoParamsFromFileStaticText->Wrap( -1 );
 	bSizer178->Add( StegoParamsFromFileStaticText, 0, wxALL, 5 );
 	
 	
-	gbSizer4->Add( bSizer178, wxGBPosition( 3, 0 ), wxGBSpan( 1, 1 ), wxEXPAND, 5 );
-	
-	
-	sbSizer50->Add( gbSizer4, 1, wxEXPAND, 5 );
+	sbSizer50->Add( bSizer178, 1, wxEXPAND, 5 );
 	
 	
 	bSizer170->Add( sbSizer50, 1, wxALL|wxEXPAND, 5 );
-	
-	wxStaticBoxSizer* sbSizer49;
-	sbSizer49 = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Stego Options") ), wxHORIZONTAL );
-	
-	OtherOptionsStaticText = new wxStaticText( this, wxID_ANY, _("Other mindblowing stego options can be added here"), wxDefaultPosition, wxDefaultSize, 0 );
-	OtherOptionsStaticText->Wrap( -1 );
-	sbSizer49->Add( OtherOptionsStaticText, 0, wxALL, 5 );
-	
-	
-	bSizer170->Add( sbSizer49, 0, wxALL|wxEXPAND, 5 );
 	
 	
 	bSizer169->Add( bSizer170, 1, wxEXPAND, 5 );
@@ -3631,8 +3616,10 @@ StegoEncoderWizardPageBase::StegoEncoderWizardPageBase( wxWindow* parent, wxWind
 	bSizer168->Fit( this );
 	
 	// Connect Events
+	StegoRadioButton_Manual->Connect( wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler( StegoEncoderWizardPageBase::OnStegoRadioClicked_Manual ), NULL, this );
 	StegoEncoderAlgorithmChoice->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( StegoEncoderWizardPageBase::OnStegoEncoderAlgorithmSelected ), NULL, this );
 	StegoEncoderAlgorithmHyperlink->Connect( wxEVT_COMMAND_HYPERLINK, wxHyperlinkEventHandler( StegoEncoderWizardPageBase::OnStegoEncoderAlgorithmHyperlinkClick ), NULL, this );
+	StegoRadioButton_File->Connect( wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler( StegoEncoderWizardPageBase::OnStegoRadioClicked_File ), NULL, this );
 	FilePathComboBox->Connect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( StegoEncoderWizardPageBase::OnFilePathTextChanged ), NULL, this );
 	SelectFileButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( StegoEncoderWizardPageBase::OnSelectFileButtonClick ), NULL, this );
 }
@@ -3640,8 +3627,10 @@ StegoEncoderWizardPageBase::StegoEncoderWizardPageBase( wxWindow* parent, wxWind
 StegoEncoderWizardPageBase::~StegoEncoderWizardPageBase()
 {
 	// Disconnect Events
+	StegoRadioButton_Manual->Disconnect( wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler( StegoEncoderWizardPageBase::OnStegoRadioClicked_Manual ), NULL, this );
 	StegoEncoderAlgorithmChoice->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( StegoEncoderWizardPageBase::OnStegoEncoderAlgorithmSelected ), NULL, this );
 	StegoEncoderAlgorithmHyperlink->Disconnect( wxEVT_COMMAND_HYPERLINK, wxHyperlinkEventHandler( StegoEncoderWizardPageBase::OnStegoEncoderAlgorithmHyperlinkClick ), NULL, this );
+	StegoRadioButton_File->Disconnect( wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler( StegoEncoderWizardPageBase::OnStegoRadioClicked_File ), NULL, this );
 	FilePathComboBox->Disconnect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( StegoEncoderWizardPageBase::OnFilePathTextChanged ), NULL, this );
 	SelectFileButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( StegoEncoderWizardPageBase::OnSelectFileButtonClick ), NULL, this );
 	

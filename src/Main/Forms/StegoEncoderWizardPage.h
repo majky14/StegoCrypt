@@ -29,19 +29,24 @@ namespace VeraCrypt
 		wxString GetAvailableAlgorithms (const stego_disk::StegoStorage &stego_storage);
 		void SetFilePath (const FilePath &path);
 		FilePath GetStegoConfigFilePath () const { return FilePath (wstring (FilePathComboBox->GetValue()));}
+		void ConfigureStegoStorage(const std::unique_ptr<stego_disk::StegoStorage> &stego_storage);
+		wxString GetEncoderAlgorithm ();
 
 	protected:
 		void OnStegoEncoderAlgorithmSelected ();
-		void OnStegoEncoderAlgorithmSelected (wxCommandEvent& event) { OnStegoEncoderAlgorithmSelected(); }
-		void OnStegoEncoderAlgorithmHyperlinkClick (wxHyperlinkEvent& event);
-		void OnFilePathTextChanged (wxCommandEvent& event);
-		void OnSelectFileButtonClick (wxCommandEvent& event);
+		void OnStegoEncoderAlgorithmSelected (wxCommandEvent &event);// { OnStegoEncoderAlgorithmSelected(); }
+		void OnStegoEncoderAlgorithmHyperlinkClick (wxHyperlinkEvent &event);
+		void OnFilePathTextChanged (wxCommandEvent &event);
+		void OnSelectFileButtonClick (wxCommandEvent &event);
 		void SetStegoConfigStatus(const wxString &text) { StegoConfigStatusStaticText->SetLabel(text); }
+		void OnStegoRadioClicked_Manual(wxCommandEvent& event);
+		void OnStegoRadioClicked_File(wxCommandEvent& event);
 		
 		bool SelectExisting;
 		
 	private:
-		wxArrayString choices;
+		wxString encoderName;
+		//wxArrayString choices;
 	};
 }
 #endif // TC_HEADER_Main_Forms_StegoEncoderWizardPage
