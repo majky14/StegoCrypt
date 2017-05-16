@@ -714,11 +714,12 @@ namespace VeraCrypt
 			{
 				StegoEncoderWizardPage *page = dynamic_cast <StegoEncoderWizardPage *> (GetCurrentPage());
 				StegoConfigPath = page->GetStegoConfigFilePath();
+				StegoConfigFromFile = page->GetStegoConfigMethod();
 				
 				if(forward){
 					try{
 						
-						if(!StegoConfigPath.IsEmpty()){
+						if(StegoConfigFromFile && !StegoConfigPath.IsEmpty()){
 							stego_storage->Configure(StegoConfigPath);
 						} else {
 							page->ConfigureStegoStorage(stego_storage);

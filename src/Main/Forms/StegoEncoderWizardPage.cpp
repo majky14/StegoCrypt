@@ -26,9 +26,8 @@ namespace VeraCrypt
 		SelectFileButton->Enable(false);
 	}
 	
-	wxString GetAvailableAlgorithms(const stego_disk::StegoStorage &stego_storage) 
-	{		
-		return wxT("asdf");
+	bool StegoEncoderWizardPage::GetStegoConfigMethod(){
+		return StegoRadioButton_File->GetValue();
 	}
 
 	wxString StegoEncoderWizardPage::GetEncoderAlgorithm(){
@@ -51,12 +50,12 @@ namespace VeraCrypt
 	
 	void StegoEncoderWizardPage::OnStegoEncoderAlgorithmSelected(wxCommandEvent &event)
 	{
-		if(!event.GetString().IsEmpty() && FilePathComboBox->IsTextEmpty()){
+		/*if(/*!event.GetString().IsEmpty() && FilePathComboBox->IsTextEmpty()){*/
 			encoderName = GetEncoderAlgorithm();
 			SetStegoConfigStatus(_("StegoStorage configured with "+encoderName+" encoder."));
 		
 			StegoEncoderAlgorithmHyperlink->SetLabel("More information about "+encoderName);
-		}
+		//}
 	}
 	
 	void StegoEncoderWizardPage::OnStegoEncoderAlgorithmHyperlinkClick (wxHyperlinkEvent &event)
@@ -103,6 +102,8 @@ namespace VeraCrypt
 		StegoEncoderAlgorithmHyperlink->Enable(true);
 		FilePathComboBox->Enable(false);
 		SelectFileButton->Enable(false);
+		encoderName = GetEncoderAlgorithm();
+		SetStegoConfigStatus(_("StegoStorage configured with "+encoderName+" encoder."));
 	}
 	
 	void StegoEncoderWizardPage::OnStegoRadioClicked_File(wxCommandEvent& event) {

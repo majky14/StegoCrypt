@@ -80,6 +80,7 @@ namespace VeraCrypt
 		VolumeHostType::Enum SelectedVolumeHostType;
 		std::unique_ptr<stego_disk::StegoStorage> stego_storage;
 		FilePath StegoConfigPath;
+		bool StegoConfigFromFile;
 		VolumeType::Enum SelectedVolumeType;
 		shared_ptr <VolumePassword> Password;
 		int Pim;

@@ -31,6 +31,7 @@ namespace VeraCrypt
 		FilePath GetStegoConfigFilePath () const { return FilePath (wstring (FilePathComboBox->GetValue()));}
 		void ConfigureStegoStorage(const std::unique_ptr<stego_disk::StegoStorage> &stego_storage);
 		wxString GetEncoderAlgorithm ();
+		bool GetStegoConfigMethod();
 
 	protected:
 		void OnStegoEncoderAlgorithmSelected ();
