@@ -100,7 +100,7 @@ namespace VeraCrypt
 
 				page->AddChoice (VolumeHostType::File, LangString["IDC_FILE_CONTAINER"], LangString["IDT_FILE_CONTAINER"], L"introcontainer", LangString["IDC_MORE_INFO_ON_CONTAINERS"]);
 				page->AddChoice (VolumeHostType::Device, _("Create a volume within a partition/&drive"), _("Formats and encrypts a non-system partition, entire external or secondary drive, entire USB stick, etc."));
-				page->AddChoice (VolumeHostType::StegoDir, _("Create volume from Stego Directory"), _("Create ..."));
+				page->AddChoice (VolumeHostType::StegoDir, _("Create volume from Stego Directory"), _("Create a volume from a directory containing pictures."));
 
 				page->SetSelection (SelectedVolumeHostType);
 				return page;
@@ -124,7 +124,7 @@ namespace VeraCrypt
 				page->SetPageTitle (LangString["VOLUME_LOCATION"]);
 
 				if(SelectedVolumeHostType == VolumeHostType::StegoDir){
-					page->SetPageText (_("Select Stego Directory"));
+					page->SetPageText (_("Select directory containing pictures in '.jpg', '.bmp' or '.png' format."));
 					
 				} else {
 				if (SelectedVolumeType == VolumeType::Hidden)

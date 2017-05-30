@@ -324,7 +324,7 @@ MainFrameBase::MainFrameBase( wxWindow* parent, wxWindowID id, const wxString& t
 	wxBoxSizer* bSizer167;
 	bSizer167 = new wxBoxSizer( wxVERTICAL );
 	
-	SelectStegoDirButton = new wxButton( MainPanel, wxID_ANY, _("Select StegoDir..."), wxDefaultPosition, wxDefaultSize, 0 );
+	SelectStegoDirButton = new wxButton( MainPanel, wxID_ANY, _("Select StegoFile..."), wxDefaultPosition, wxDefaultSize, 0 );
 	bSizer167->Add( SelectStegoDirButton, 0, wxALL, 5 );
 	
 	
