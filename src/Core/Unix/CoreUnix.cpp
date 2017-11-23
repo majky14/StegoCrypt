@@ -428,6 +428,57 @@ namespace VeraCrypt
 
 		Cipher::EnableHwSupport (!options.NoHardwareCrypto);
 
+		shared_ptr <VolumePath> volumeStegoPath;
+
+		// if path is directory then run stegostorage
+		if (options.Path->IsDirectory()) {
+			// Find a free mount point for stego FUSE service
+			MountedFilesystemList mountedFilesystems = GetMountedFilesystems ();
+			string fuseStegoMountPoint;
+			for (int i = 1; true; i++)
+			{
+				stringstream stegoPath;
+				stegoPath << GetTempDirectory() << "/" << GetFuseMountDirPrefix() << i << "_stego";
+				FilesystemPath fsStegoPath (stegoPath.str());
+
+				bool inUse = false;
+
+				foreach_ref (const MountedFilesystem &mf, mountedFilesystems)
+				{
+					if (mf.MountPoint == stegoPath.str())
+					{
+						inUse = true;
+						break;
+					}
+				}
+
+				if (!inUse)
+				{
+					try
+					{
+						if (fsStegoPath.IsDirectory())
+							fsStegoPath.Delete();
+
+						throw_sys_sub_if (mkdir (stegoPath.str().c_str(), S_IRUSR | S_IXUSR) == -1, stegoPath.str());
+
+						fuseStegoMountPoint = fsStegoPath;
+						volumeStegoPath = make_shared <VolumePath> (fuseStegoMountPoint);
+						break;
+					}
+					catch (...)
+					{
+						if (i > 255)
+							throw TemporaryDirectoryFailure (SRC_POS, StringConverter::ToWide (stegoPath.str()));
+					}
+				}
+			}
+
+			// run stegostorage
+
+            // set stegostorage file to path
+			options.Path = make_shared <VolumePath> (wstring(L"/tmp/example/virtualdisc.iso"));
+		}
+
 		shared_ptr <Volume> volume;
 
 		while (true)
@@ -436,6 +487,7 @@ namespace VeraCrypt
 			{
 				volume = OpenVolume (
 					options.Path,
+					volumeStegoPath,
 					options.PreserveTimestamps,
 					options.Password,
 					options.Pim,

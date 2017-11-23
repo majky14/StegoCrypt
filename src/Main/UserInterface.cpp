@@ -740,7 +740,7 @@ namespace VeraCrypt
 		try
 		{
 			volume = MountVolumeThread (options);
-
+			ShowString (StringFormatter (L" Stego Mount Point: {0}\n", wstring(volume->StegoMountPoint)));
 		}
 		catch (VolumeHostInUse&)
 		{

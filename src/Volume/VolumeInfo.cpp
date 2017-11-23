@@ -35,6 +35,7 @@ namespace VeraCrypt
 			sr.Deserialize ("MinRequiredProgramVersion", MinRequiredProgramVersion);
 
 		MountPoint = sr.DeserializeWString ("MountPoint");
+		StegoMountPoint = sr.DeserializeWString ("StegoMountPoint"); // added for stegostorage
 		Path = sr.DeserializeWString ("Path");
 		sr.Deserialize ("Pkcs5IterationCount", Pkcs5IterationCount);
 		Pkcs5PrfName = sr.DeserializeWString ("Pkcs5PrfName");
@@ -81,6 +82,7 @@ namespace VeraCrypt
 		sr.Serialize ("LoopDevice", wstring (LoopDevice));
 		sr.Serialize ("MinRequiredProgramVersion", MinRequiredProgramVersion);
 		sr.Serialize ("MountPoint", wstring (MountPoint));
+		sr.Serialize ("StegoMountPoint", wstring (StegoMountPoint)); // added for stegostorage
 		sr.Serialize ("Path", wstring (Path));
 		sr.Serialize ("Pkcs5IterationCount", Pkcs5IterationCount);
 		sr.Serialize ("Pkcs5PrfName", Pkcs5PrfName);
@@ -111,6 +113,7 @@ namespace VeraCrypt
 		HiddenVolumeProtectionTriggered = volume.IsHiddenVolumeProtectionTriggered();
 		MinRequiredProgramVersion = volume.GetHeader()->GetRequiredMinProgramVersion();
 		Path = volume.GetPath();
+		if (volume.GetStegoPath()) { StegoMountPoint = *volume.GetStegoPath(); } // added for stegostorage
 		Pkcs5IterationCount = volume.GetPkcs5Kdf()->GetIterationCount(volume.GetPim ());
 		Pkcs5PrfName = volume.GetPkcs5Kdf()->GetName();
 		Protection = volume.GetProtectionType();

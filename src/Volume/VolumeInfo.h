@@ -45,6 +45,7 @@ namespace VeraCrypt
 		DevicePath LoopDevice;
 		uint32 MinRequiredProgramVersion;
 		DirectoryPath MountPoint;
+		DirectoryPath StegoMountPoint; // added for stegostorage mount point
 		VolumePath Path;
 		uint32 Pkcs5IterationCount;
 		wstring Pkcs5PrfName;

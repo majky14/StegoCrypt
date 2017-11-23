@@ -102,6 +102,15 @@ namespace VeraCrypt
 		return Open (file, password, pim, kdf, truecryptMode, keyfiles, protection, protectionPassword, protectionPim, protectionKdf,protectionKeyfiles, volumeType, useBackupHeaders, partitionInSystemEncryptionScope);
 	}
 
+	// Open with stegoPath
+	void Volume::Open (const VolumePath &volumePath, shared_ptr <VolumePath> volumeStegoPath, bool preserveTimestamps, shared_ptr <VolumePassword> password, int pim, shared_ptr <Pkcs5Kdf> kdf, bool truecryptMode, shared_ptr <KeyfileList> keyfiles, VolumeProtection::Enum protection, shared_ptr <VolumePassword> protectionPassword, int protectionPim, shared_ptr <Pkcs5Kdf> protectionKdf, shared_ptr <KeyfileList> protectionKeyfiles, bool sharedAccessAllowed, VolumeType::Enum volumeType, bool useBackupHeaders, bool partitionInSystemEncryptionScope)
+	{
+		if (volumeStegoPath)
+			VolumeStegoPath = volumeStegoPath;
+
+		return Open(volumePath, preserveTimestamps, password, pim, kdf, truecryptMode, keyfiles, protection, protectionPassword, protectionPim, protectionKdf, protectionKeyfiles, sharedAccessAllowed, volumeType, useBackupHeaders, partitionInSystemEncryptionScope);
+	}
+
 	void Volume::Open (shared_ptr <File> volumeFile, shared_ptr <VolumePassword> password, int pim, shared_ptr <Pkcs5Kdf> kdf, bool truecryptMode, shared_ptr <KeyfileList> keyfiles, VolumeProtection::Enum protection, shared_ptr <VolumePassword> protectionPassword, int protectionPim, shared_ptr <Pkcs5Kdf> protectionKdf,shared_ptr <KeyfileList> protectionKeyfiles, VolumeType::Enum volumeType, bool useBackupHeaders, bool partitionInSystemEncryptionScope)
 	{
 		if (!volumeFile)

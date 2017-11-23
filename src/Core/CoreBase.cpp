@@ -261,6 +261,14 @@ namespace VeraCrypt
 		return volume;
 	}
 
+	// OpenVolume with stegoPath
+	shared_ptr <Volume> CoreBase::OpenVolume (shared_ptr <VolumePath> volumePath, shared_ptr <VolumePath> volumeStegoPath, bool preserveTimestamps, shared_ptr <VolumePassword> password, int pim, shared_ptr<Pkcs5Kdf> kdf, bool truecryptMode, shared_ptr <KeyfileList> keyfiles, VolumeProtection::Enum protection, shared_ptr <VolumePassword> protectionPassword, int protectionPim, shared_ptr<Pkcs5Kdf> protectionKdf, shared_ptr <KeyfileList> protectionKeyfiles, bool sharedAccessAllowed, VolumeType::Enum volumeType, bool useBackupHeaders, bool partitionInSystemEncryptionScope) const
+	{
+		make_shared_auto (Volume, volume);
+		volume->Open (*volumePath, volumeStegoPath, preserveTimestamps, password, pim, kdf, truecryptMode, keyfiles, protection, protectionPassword, protectionPim, protectionKdf, protectionKeyfiles, sharedAccessAllowed, volumeType, useBackupHeaders, partitionInSystemEncryptionScope);
+		return volume;
+	}
+
 	void CoreBase::RandomizeEncryptionAlgorithmKey (shared_ptr <EncryptionAlgorithm> encryptionAlgorithm) const
 	{
 		SecureBuffer eaKey (encryptionAlgorithm->GetKeySize());
