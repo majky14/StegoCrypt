@@ -18,6 +18,9 @@
 #include <sys/types.h>
 #include <stdio.h>
 #include <unistd.h>
+#include "StegoDisk/src/tests/test_config.h"
+#include "StegoDisk/src/fuse/fuse_service.h"
+#include "StegoDisk/src/stego_storage.h"
 #include "Platform/FileStream.h"
 #include "Driver/Fuse/FuseService.h"
 #include "Volume/VolumePasswordCache.h"
@@ -474,13 +477,37 @@ namespace VeraCrypt
 			}
 
 			// run stegostorage
+			std::unique_ptr<stego_disk::StegoStorage> stego_storage(new stego_disk::StegoStorage());
+			stego_storage->Configure();
+			stego_storage->Open("/home/m4jky/Documents/images", PASSWORD);
+			stego_storage->Load();
+
+			if (Stego::FuseService::Init(stego_storage.get()) != 0) {
+				_exit(-1);
+			}
+
+			if (Stego::FuseService::MountFuse(DST_DIRECTORY) != 0) {
+//                ofstream myfile;
+//                myfile.open ("/tmp/zzz.txt", ofstream::app);
+//                myfile << "paretn returned 1" << "\n";
+//                myfile.close();
+				_exit(1);
+			}
 
             // set stegostorage file to path
 			options.Path = make_shared <VolumePath> (wstring(L"/tmp/example/virtualdisc.iso"));
+
+//			ofstream myfile;
+//			myfile.open ("/tmp/zzz.txt", ofstream::app);
+//			myfile << string(*options.Path) << "\n";
+//			myfile.close();
 		}
 
+//		ofstream myfile1;
+//		myfile1.open ("/tmp/zzz22.txt", ofstream::app);
+//		myfile1 << "volume" << "\n";
+//		myfile1.close();
 		shared_ptr <Volume> volume;
-
 		while (true)
 		{
 			try
@@ -582,6 +609,10 @@ namespace VeraCrypt
 
 		try
 		{
+//			ofstream myfile;
+//			myfile.open ("/tmp/zzz.txt");
+//			myfile << fuseMountPoint << "\n";
+//			myfile.close();
 			FuseService::Mount (volume, options.SlotNumber, fuseMountPoint);
 		}
 		catch (...)
