@@ -165,8 +165,8 @@ ifeq "$(shell uname -s)" "Linux"
 	C_CXX_FLAGS += -DTC_UNIX -DTC_LINUX
 	
 	ifeq "$(SIMD_SUPPORTED)" "1"
-		CFLAGS += -msse2
-		CXXFLAGS += -msse2
+		CFLAGS += -msse2 -maes
+		CXXFLAGS += -msse2 -maes
 
 		GCC_GTEQ_440 := $(shell expr `gcc -dumpversion | sed -e 's/\.\([0-9][0-9]\)/\1/g' -e 's/\.\([0-9]\)/0\1/g' -e 's/^[0-9]\{3,4\}$$/&00/'` \>= 40400)
 		GCC_GTEQ_430 := $(shell expr `gcc -dumpversion | sed -e 's/\.\([0-9][0-9]\)/\1/g' -e 's/\.\([0-9]\)/0\1/g' -e 's/^[0-9]\{3,4\}$$/&00/'` \>= 40300)
