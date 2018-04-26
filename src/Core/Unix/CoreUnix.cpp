@@ -169,6 +169,26 @@ namespace VeraCrypt
 		}
 		catch (...)	{ }
 
+		if (mountedVolume->StegoMountPoint.IsDirectory()) {
+			char *argv[4];
+			memset(argv, 0, 4 * sizeof(char *));
+
+			string path(mountedVolume->StegoMountPoint);
+
+			argv[0] = "fusermount";
+			argv[1] = "-u";
+			argv[2] = (char*)path.c_str();
+			argv[3] = NULL;
+
+			pid_t pid = fork();
+			if (pid == 0) {
+				execvp(argv[0], argv);
+				exit(1);
+			}
+            Thread::Sleep (200);
+			mountedVolume->StegoMountPoint.Delete();
+		}
+
 		VolumeEventArgs eventArgs (mountedVolume);
 		VolumeDismountedEvent.Raise (eventArgs);
 
@@ -490,7 +510,6 @@ namespace VeraCrypt
 			argv[5] = "-p";
 			argv[6] = "";
 			argv[7] = NULL;
-			int argc = 7;
 
             pid_t pid = fork();
             if (pid == 0) {
