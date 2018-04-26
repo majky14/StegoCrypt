@@ -477,36 +477,44 @@ namespace VeraCrypt
 			}
 
 			// run stegostorage
-			std::unique_ptr<stego_disk::StegoStorage> stego_storage(new stego_disk::StegoStorage());
-			stego_storage->Configure();
-			stego_storage->Open("/home/m4jky/Documents/images", PASSWORD);
-			stego_storage->Load();
+			char *argv[10];
+			memset(argv, 0, 10 * sizeof(char *));
 
-			if (Stego::FuseService::Init(stego_storage.get()) != 0) {
-				_exit(-1);
-			}
+            string path(*options.Path);
 
-			if (Stego::FuseService::MountFuse(DST_DIRECTORY) != 0) {
-//                ofstream myfile;
-//                myfile.open ("/tmp/zzz.txt", ofstream::app);
-//                myfile << "paretn returned 1" << "\n";
-//                myfile.close();
-				_exit(1);
+			argv[0] = "stego_fuse";
+			argv[1] = "-f";
+			argv[2] = (char*)fuseStegoMountPoint.c_str();
+			argv[3] = "-i";
+			argv[4] = (char*)path.c_str();
+			argv[5] = "-p";
+			argv[6] = "";
+			argv[7] = NULL;
+			int argc = 7;
+
+            pid_t pid = fork();
+            if (pid == 0) {
+                execvp(argv[0], argv);
+                exit(1);
+            }
+
+			while (true)
+			{
+				try
+				{
+					if (FilesystemPath (fuseStegoMountPoint + "/virtualdisc.iso").IsFile())
+						break;
+				}
+				catch (...)
+				{
+					Thread::Sleep (100);
+				}
 			}
 
             // set stegostorage file to path
-			options.Path = make_shared <VolumePath> (wstring(L"/tmp/example/virtualdisc.iso"));
-
-//			ofstream myfile;
-//			myfile.open ("/tmp/zzz.txt", ofstream::app);
-//			myfile << string(*options.Path) << "\n";
-//			myfile.close();
+			options.Path = make_shared <VolumePath> (wstring(FilesystemPath (fuseStegoMountPoint + "/virtualdisc.iso")));
 		}
 
-//		ofstream myfile1;
-//		myfile1.open ("/tmp/zzz22.txt", ofstream::app);
-//		myfile1 << "volume" << "\n";
-//		myfile1.close();
 		shared_ptr <Volume> volume;
 		while (true)
 		{
@@ -609,10 +617,6 @@ namespace VeraCrypt
 
 		try
 		{
-//			ofstream myfile;
-//			myfile.open ("/tmp/zzz.txt");
-//			myfile << fuseMountPoint << "\n";
-//			myfile.close();
 			FuseService::Mount (volume, options.SlotNumber, fuseMountPoint);
 		}
 		catch (...)
