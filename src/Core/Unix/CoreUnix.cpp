@@ -18,9 +18,6 @@
 #include <sys/types.h>
 #include <stdio.h>
 #include <unistd.h>
-#include "StegoDisk/src/tests/test_config.h"
-#include "StegoDisk/src/fuse/fuse_service.h"
-#include "StegoDisk/src/stego_storage.h"
 #include "Platform/FileStream.h"
 #include "Driver/Fuse/FuseService.h"
 #include "Volume/VolumePasswordCache.h"
